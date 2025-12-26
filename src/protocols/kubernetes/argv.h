@@ -44,6 +44,18 @@
 #define GUAC_KUBERNETES_ARGV_FONT_SIZE "font-size"
 
 /**
+ * The name of the parameter that specifies the pod identifier of the
+ * Kubernetes pod instance (optional).
+ */
+#define GUAC_KUBERNETES_ARGV_POD_ID "pod-id"
+
+/**
+ * The name of the parameter that specifies the IP address of the pod
+ * for the Kubernetes connection (optional).
+ */
+#define GUAC_KUBERNETES_ARGV_POD_IP_ADDRESS "ip-address"
+
+/**
  * Handles a received argument value from a Guacamole "argv" instruction,
  * updating the given connection parameter.
  */

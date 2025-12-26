@@ -90,6 +90,17 @@ void* guac_kubernetes_send_current_argv_batch(
     guac_client_stream_argv(client, socket, "text/plain",
             GUAC_KUBERNETES_ARGV_FONT_SIZE, font_size);
 
+    /* Send pod identifier and IP (from hostname) so pending users receive the same identifying parameters */
+    if (kubernetes_client->settings->kubernetes_pod != NULL)
+        guac_client_stream_argv(client, socket, "text/plain",
+                GUAC_KUBERNETES_ARGV_POD_ID,
+                kubernetes_client->settings->kubernetes_pod);
+
+    if (kubernetes_client->settings->hostname != NULL && strcmp(kubernetes_client->settings->hostname, "") != 0)
+        guac_client_stream_argv(client, socket, "text/plain",
+                GUAC_KUBERNETES_ARGV_POD_IP_ADDRESS,
+                kubernetes_client->settings->hostname);
+
     return NULL;
 
 }
