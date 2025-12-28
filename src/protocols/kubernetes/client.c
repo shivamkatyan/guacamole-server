@@ -135,6 +135,10 @@ int guac_client_init(guac_client* client) {
     guac_argv_register(GUAC_KUBERNETES_ARGV_FONT_NAME, guac_kubernetes_argv_callback, NULL, GUAC_ARGV_OPTION_ECHO);
     guac_argv_register(GUAC_KUBERNETES_ARGV_FONT_SIZE, guac_kubernetes_argv_callback, NULL, GUAC_ARGV_OPTION_ECHO);
 
+    /* Register pod and ip-address so incoming argv info updates settings */
+    guac_argv_register(GUAC_KUBERNETES_ARGV_POD, guac_kubernetes_argv_callback, NULL, GUAC_ARGV_OPTION_ECHO);
+    guac_argv_register(GUAC_KUBERNETES_ARGV_POD_IP_ADDRESS, guac_kubernetes_argv_callback, NULL, GUAC_ARGV_OPTION_ECHO);
+
     /* Set locale and warn if not UTF-8 */
     setlocale(LC_CTYPE, "");
     if (strcmp(nl_langinfo(CODESET), "UTF-8") != 0) {

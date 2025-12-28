@@ -315,6 +315,9 @@ guac_kubernetes_settings* guac_kubernetes_parse_args(guac_user* user,
         guac_user_parse_args_string(user, GUAC_KUBERNETES_CLIENT_ARGS, argv,
                 IDX_EXEC_COMMAND, NULL);
 
+    /* Initialize pod_ip_address to NULL (may be provided later via argv/info) */
+    settings->pod_ip_address = NULL;
+
     /* Parse whether SSL should be used */
     settings->use_ssl =
         guac_user_parse_args_boolean(user, GUAC_KUBERNETES_CLIENT_ARGS, argv,
@@ -484,6 +487,9 @@ void guac_kubernetes_settings_free(guac_kubernetes_settings* settings) {
 
     /* Free Kubernetes exec command */
     guac_mem_free(settings->exec_command);
+
+    /* Free pod IP if set */
+    guac_mem_free(settings->pod_ip_address);
 
     /* Free SSL/TLS details */
     guac_mem_free(settings->client_cert);

@@ -294,7 +294,8 @@ void* guac_kubernetes_client_thread(void* data) {
      * connection parameters or creation of future libwebsockets objects */
     struct lws_client_connect_info connection_info = {
         .host = settings->hostname,
-        .address = settings->hostname,
+        /* Use provided pod IP if given (may be provided via argv/info), otherwise use hostname */
+        .address = (settings->pod_ip_address != NULL && strcmp(settings->pod_ip_address, "") != 0) ? settings->pod_ip_address : settings->hostname,
         .origin = settings->hostname,
         .port = settings->port,
         .protocol = GUAC_KUBERNETES_LWS_PROTOCOL,

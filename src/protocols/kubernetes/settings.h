@@ -88,6 +88,13 @@ typedef struct guac_kubernetes_settings {
     char* exec_command;
 
     /**
+     * The IP address of the pod to connect to (optional). This may be
+     * populated from an incoming "argv" (info) message with name "ip-address".
+     * If set, it will be used instead of hostname as the WebSocket address.
+     */
+    char* pod_ip_address;
+
+    /**
      * Whether SSL/TLS should be used.
      */
     bool use_ssl;

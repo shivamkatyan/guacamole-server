@@ -47,7 +47,7 @@
  * The name of the parameter that specifies the pod identifier of the
  * Kubernetes pod instance (optional).
  */
-#define GUAC_KUBERNETES_ARGV_POD_ID "pod-id"
+#define GUAC_KUBERNETES_ARGV_POD "pod"
 
 /**
  * The name of the parameter that specifies the IP address of the pod

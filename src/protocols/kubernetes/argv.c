@@ -52,6 +52,21 @@ int guac_kubernetes_argv_callback(guac_user* user, const char* mimetype,
                     kubernetes_client->settings->resolution);
     }
 
+    /* Update pod name if provided */
+    else if (strcmp(name, GUAC_KUBERNETES_ARGV_POD) == 0) {
+        guac_client_log(client, GUAC_LOG_INFO, "Received argv pod: %s", value);
+        /* Replace existing value */
+        guac_mem_free(kubernetes_client->settings->kubernetes_pod);
+        kubernetes_client->settings->kubernetes_pod = guac_strdup(value);
+    }
+
+    /* Update pod IP address if provided */
+    else if (strcmp(name, GUAC_KUBERNETES_ARGV_POD_IP_ADDRESS) == 0) {
+        guac_client_log(client, GUAC_LOG_INFO, "Received argv ip-address: %s", value);
+        guac_mem_free(kubernetes_client->settings->pod_ip_address);
+        kubernetes_client->settings->pod_ip_address = guac_strdup(value);
+    }
+
     /* Update Kubernetes terminal size */
     guac_kubernetes_resize(client,
             guac_terminal_get_rows(terminal),
@@ -90,16 +105,16 @@ void* guac_kubernetes_send_current_argv_batch(
     guac_client_stream_argv(client, socket, "text/plain",
             GUAC_KUBERNETES_ARGV_FONT_SIZE, font_size);
 
-    /* Send pod identifier and IP (from hostname) so pending users receive the same identifying parameters */
+    /* Send pod name and IP so pending users receive the same identifying parameters */
     if (kubernetes_client->settings->kubernetes_pod != NULL)
         guac_client_stream_argv(client, socket, "text/plain",
-                GUAC_KUBERNETES_ARGV_POD_ID,
+                GUAC_KUBERNETES_ARGV_POD,
                 kubernetes_client->settings->kubernetes_pod);
 
-    if (kubernetes_client->settings->hostname != NULL && strcmp(kubernetes_client->settings->hostname, "") != 0)
+    if (kubernetes_client->settings->pod_ip_address != NULL && strcmp(kubernetes_client->settings->pod_ip_address, "") != 0)
         guac_client_stream_argv(client, socket, "text/plain",
                 GUAC_KUBERNETES_ARGV_POD_IP_ADDRESS,
-                kubernetes_client->settings->hostname);
+                kubernetes_client->settings->pod_ip_address);
 
     return NULL;
 
