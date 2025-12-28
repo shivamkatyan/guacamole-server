@@ -197,3 +197,13 @@ or
 ```
 docker run --rm  --entrypoint sh <image:tag> -c '/opt/guacamole/sbin/guacd -v'
 ```
+
+for older version use:
+
+```
+# direct (overrides image CMD)
+docker run --rm <image> /usr/local/guacamole/sbin/guacd -v
+
+# or using --entrypoint
+docker run --rm --entrypoint /usr/local/guacamole/sbin/guacd <image> -v
+```
