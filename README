@@ -187,7 +187,7 @@ hosted at:
 Get Guacd Version
 ------------------------------------------------------------
 Use below command to get the version of guacd from docker image
- 
+
 ```
 docker run --rm --entrypoint /opt/guacamole/sbin/guacd <image:tag> -v
 ```
